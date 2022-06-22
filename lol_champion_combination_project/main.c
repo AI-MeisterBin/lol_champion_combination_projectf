@@ -1,7 +1,3 @@
-//¼ºÀû °ü¸® ÇÁ·Î±×·¥ - ÀÌÁß ¿¬°á¸®½ºÆ®
-//»ı¼º ¼ø¼­·Î ¿¬°á ¸®½ºÆ®¿¡ º¸°ü
-//Áßº¹ µ¥ÀÌÅÍ Ã³¸® ¾øÀ½
-//ÀÔ·Â ¿À·ù¿¡ °üÇÑ ¿¹¿Ü Ã³¸® ¾øÀ½
 
 #include <stdio.h>
 #include <memory.h>
@@ -9,12 +5,12 @@
 #include <string.h>
 #include <string.h> 
 
-#define MAX_NLEN    30 //ÃÖ´ë ÀÌ¸§ ±æÀÌ
-#define MAX_SPEC 5 //Æ¯¼º ¼ö
-typedef struct Champion {//Ã¨ÇÇ¾ğ ±¸Á¶Ã¼ Á¤ÀÇ
-    char name[MAX_NLEN + 1];//ÀÌ¸§
-    int num; //¹øÈ£
-    int ability[MAX_SPEC];//´É·ÂÄ¡
+#define MAX_NLEN    30 //ìµœëŒ€ ì´ë¦„ ê¸¸ì´
+#define MAX_SPEC 5 //íŠ¹ì„± ìˆ˜
+typedef struct Champion {//ì±”í”¼ì–¸ êµ¬ì¡°ì²´ ì •ì˜
+    char name[MAX_NLEN + 1];//ì´ë¦„
+    int num; //ë²ˆí˜¸
+    int ability[MAX_SPEC];//ëŠ¥ë ¥ì¹˜
 
     struct Champion* next;
     struct Champion* prev;
@@ -22,20 +18,20 @@ typedef struct Champion {//Ã¨ÇÇ¾ğ ±¸Á¶Ã¼ Á¤ÀÇ
 }Champion;
 
 
-const char* ability_List[MAX_SPEC] = { "ÅÊÅ··Â","À¯Áö·Â","Áö¼Óµô", "cc±â·Â", "Ä³¸®·Â" };
+const char* ability_List[MAX_SPEC] = { "íƒ±í‚¹ë ¥","ìœ ì§€ë ¥","ì§€ì†ë”œ", "ccê¸°ë ¥", "ìºë¦¬ë ¥" };
 
 
 Champion* head, * tail;
 void set_Cham();
-void Initialize();//ÃÊ±âÈ­
+void Initialize();//ì´ˆê¸°í™”
 void Run();
-void Exit();//Á¾·áÇÏ±â Àü¿¡ ÇÒ´çÇÑ ¸Ş¸ğ¸® ÇØÁ¦
+void Exit();//ì¢…ë£Œí•˜ê¸° ì „ì— í• ë‹¹í•œ ë©”ëª¨ë¦¬ í•´ì œ
 int main(void)
 {
-    Initialize();//ÃÊ±âÈ­
-    //set_Cham(); ¸Ş¸ğÀå¿¡ ÀÖ´Â µ¥ÀÌÅÍ¸¦ °¡Á®¿Í¼­ ¼³Á¤ -> ½ÇÆĞ
+    Initialize();//ì´ˆê¸°í™”
+    //set_Cham(); ë©”ëª¨ì¥ì— ìˆëŠ” ë°ì´í„°ë¥¼ ê°€ì ¸ì™€ì„œ ì„¤ì • -> ì‹¤íŒ¨
     Run();
-    Exit();//Á¾·áÇÏ±â Àü¿¡ ÇÒ´çÇÑ ¸Ş¸ğ¸® ÇØÁ¦
+    Exit();//ì¢…ë£Œí•˜ê¸° ì „ì— í• ë‹¹í•œ ë©”ëª¨ë¦¬ í•´ì œ
     return 0;
 }
 /*
@@ -45,7 +41,7 @@ void set_Cham()
     fopen_s(&fp, "Champion_List", "r");
     if (fp == NULL)
     {
-        printf("½ÇÆĞ");
+        printf("ì‹¤íŒ¨");
         return 0;
     }
     char buff[100];
@@ -54,9 +50,9 @@ void set_Cham()
         fgets(buff, 100, fp);
 
         char* context = NULL;
-        char* cut_buff = strtok_s(buff, " ",&context); // buff ¸¦ ÀÚ¸§ ÀÌ¸§ ÅÊÅ··Â À¯Áö·Â Áö¼Óµô cc±â·Â Ä³¸®·Â
+        char* cut_buff = strtok_s(buff, " ",&context); // buff ë¥¼ ìë¦„ ì´ë¦„ íƒ±í‚¹ë ¥ ìœ ì§€ë ¥ ì§€ì†ë”œ ccê¸°ë ¥ ìºë¦¬ë ¥
 
-        while (cut_buff != NULL)               // ÀÚ¸¥ ¹®ÀÚ¿­ÀÌ ³ª¿ÀÁö ¾ÊÀ» ¶§±îÁö ¹İº¹
+        while (cut_buff != NULL)               // ìë¥¸ ë¬¸ìì—´ì´ ë‚˜ì˜¤ì§€ ì•Šì„ ë•Œê¹Œì§€ ë°˜ë³µ
         {
             int num = 0;
             Champion* cham = 0;
@@ -70,7 +66,7 @@ void set_Cham()
             {
                 strcpy_s(cham->ability + s, sizeof(cham->ability), cut_buff[s+1]);
             }
-            cut_buff = strtok_s(NULL, " ", &context);      // ´ÙÀ½ ¹®ÀÚ¿­À» Àß¶ó¼­ Æ÷ÀÎÅÍ¸¦ ¹İÈ¯
+            cut_buff = strtok_s(NULL, " ", &context);      // ë‹¤ìŒ ë¬¸ìì—´ì„ ì˜ë¼ì„œ í¬ì¸í„°ë¥¼ ë°˜í™˜
         }
         
         int num = 0;
@@ -87,62 +83,62 @@ void set_Cham()
 
 void Initialize()
 {
-    head = (Champion*)malloc(sizeof(Champion));//´õ¹Ì ³ëµå »ı¼º
-    tail = (Champion*)malloc(sizeof(Champion));//´õ¹Ì ³ëµå »ı¼º
-    head->next = tail;//¸Ç ¾Õ ´õ¹Ì³ëµå next¸¦ tail·Î ¼³Á¤
-    tail->prev = head;//¸Ç µÚ ´õ¹Ì³ëµå prev¸¦ head·Î ¼³Á¤
+    head = (Champion*)malloc(sizeof(Champion));//ë”ë¯¸ ë…¸ë“œ ìƒì„±
+    tail = (Champion*)malloc(sizeof(Champion));//ë”ë¯¸ ë…¸ë“œ ìƒì„±
+    head->next = tail;//ë§¨ ì• ë”ë¯¸ë…¸ë“œ nextë¥¼ tailë¡œ ì„¤ì •
+    tail->prev = head;//ë§¨ ë’¤ ë”ë¯¸ë…¸ë“œ prevë¥¼ headë¡œ ì„¤ì •
     head->prev = tail->next = NULL;
 }
 
-int SelectMenu();//¸Ş´º Ãâ·Â ¹× ¼±ÅÃ
-void AddChampion();//Ã¨ÇÇ¾ğ µ¥ÀÌÅÍ ÀÔ·Â
-void RemoveChampion();//Ã¨ÇÇ¾ğ µ¥ÀÌÅÍ »èÁ¦
-void FindChampion();//Ã¨ÇÇ¾ğ °Ë»ö
-void ListChampion();//¸ñ·Ï º¸±â
-void combination_judge();//ÆÀ Á¶ÇÕ ÆÇ´Ü
+int SelectMenu();//ë©”ë‰´ ì¶œë ¥ ë° ì„ íƒ
+void AddChampion();//ì±”í”¼ì–¸ ë°ì´í„° ì…ë ¥
+void RemoveChampion();//ì±”í”¼ì–¸ ë°ì´í„° ì‚­ì œ
+void FindChampion();//ì±”í”¼ì–¸ ê²€ìƒ‰
+void ListChampion();//ëª©ë¡ ë³´ê¸°
+void combination_judge();//íŒ€ ì¡°í•© íŒë‹¨
 void Run()
 {
     int key = 0;
-    while ((key = SelectMenu()) != 0)//¼±ÅÃÇÑ ¸Ş´º°¡ 0ÀÌ ¾Æ´Ï¸é ¹İº¹
+    while ((key = SelectMenu()) != 0)//ì„ íƒí•œ ë©”ë‰´ê°€ 0ì´ ì•„ë‹ˆë©´ ë°˜ë³µ
     {
-        switch (key)//¼±ÅÃÇÑ Å°¿¡ µû¶ó ±â´É ¼öÇà
+        switch (key)//ì„ íƒí•œ í‚¤ì— ë”°ë¼ ê¸°ëŠ¥ ìˆ˜í–‰
         {
         case 1: AddChampion(); break;
         case 2: RemoveChampion(); break;
         case 3: ListChampion(); break;
         case 4: combination_judge(); break;
-        default: printf("Àß¸ø ¼±ÅÃÇÏ¿´½À´Ï´Ù.\n"); break;
+        default: printf("ì˜ëª» ì„ íƒí•˜ì˜€ìŠµë‹ˆë‹¤.\n"); break;
         }
     }
-    printf("ÇÁ·Î±×·¥ Á¾·á\n");
+    printf("í”„ë¡œê·¸ë¨ ì¢…ë£Œ\n");
 }
 
 int SelectMenu()
 {
     int key = 0;
 
-    printf("·Ñ Á¶ÇÕ ÆÇ´Ü ÇÁ·Î±×·¥ 0:Á¾·á\n");
-    printf("1: Ã¨ÇÇ¾ğ µ¥ÀÌÅÍ ÀÔ·Â 2: Ã¨ÇÇ¾ğ µ¥ÀÌÅÍ »èÁ¦ 3: Ã¨ÇÇ¾ğ ¸ñ·Ï º¸±â 4: ÆÀ Á¶ÇÕ ÃÖÁ¾ Æò°¡ Ãâ·Â \n"); // +Ã¨ÇÇ¾ğ ¹øÈ£ ÀÔ·Â
+    printf("ë¡¤ ì¡°í•© íŒë‹¨ í”„ë¡œê·¸ë¨ 0:ì¢…ë£Œ\n");
+    printf("1: ì±”í”¼ì–¸ ë°ì´í„° ì…ë ¥ 2: ì±”í”¼ì–¸ ë°ì´í„° ì‚­ì œ 3: ì±”í”¼ì–¸ ëª©ë¡ ë³´ê¸° 4: íŒ€ ì¡°í•© ìµœì¢… í‰ê°€ ì¶œë ¥ \n"); // +ì±”í”¼ì–¸ ë²ˆí˜¸ ì…ë ¥
     scanf_s("%d", &key);
 
     return key;
 }
 
-int IsAvailNum(int num);//À¯È¿ÇÑ ¹øÈ£ÀÎÁö ÆÇº°
-int IsAvailScore(int score);//À¯È¿ÇÑ ´É·ÂÄ¡ÀÎÁö ÆÇº°
+int IsAvailNum(int num);//ìœ íš¨í•œ ë²ˆí˜¸ì¸ì§€ íŒë³„
+int IsAvailScore(int score);//ìœ íš¨í•œ ëŠ¥ë ¥ì¹˜ì¸ì§€ íŒë³„
 void AddChampion()
 {
     int num = 0;
     Champion* cham = 0;
     int s = 0;
 
-    printf("Ãß°¡ÇÒ Ã¨ÇÇ¾ğ ¹øÈ£: ");
+    printf("ì¶”ê°€í•  ì±”í”¼ì–¸ ë²ˆí˜¸: ");
     scanf_s("%d", &num);
 
 
-    cham = (Champion*)malloc(sizeof(Champion));//Ã¨ÇÇ¾ğ ±¸Á¶Ã¼ µ¿Àû ¸Ş¸ğ¸® ÇÒ´ç    
+    cham = (Champion*)malloc(sizeof(Champion));//ì±”í”¼ì–¸ êµ¬ì¡°ì²´ ë™ì  ë©”ëª¨ë¦¬ í• ë‹¹    
     cham->num = num;
-    printf("ÀÌ¸§: ");
+    printf("ì´ë¦„: ");
     scanf_s("%s", cham->name, sizeof(cham->name));
 
     for (s = 0; s < MAX_SPEC; s++)
@@ -150,14 +146,14 @@ void AddChampion()
         printf("%s :", ability_List[s]);
         scanf_s("%d", cham->ability + s);
 
-        if (IsAvailScore(cham->ability[s]) == 0)//À¯È¿ÇÑ ¼ºÀûÀÌ ¾Æ´Ò ¶§
+        if (IsAvailScore(cham->ability[s]) == 0)//ìœ íš¨í•œ ì„±ì ì´ ì•„ë‹ ë•Œ
         {
             cham->ability[s] = -1;
-            printf("ÀÔ·ÂÇÑ ´É·ÂÄ¡°¡ À¯È¿ÇÏÁö ¾Ê¾Æ¼­ %s ´É·ÂÄ¡¸¦ ÀÔ·Â Ã³¸®ÇÏÁö ¾Ê¾Ò½À´Ï´Ù.\n", ability_List[s]);
+            printf("ì…ë ¥í•œ ëŠ¥ë ¥ì¹˜ê°€ ìœ íš¨í•˜ì§€ ì•Šì•„ì„œ %s ëŠ¥ë ¥ì¹˜ë¥¼ ì…ë ¥ ì²˜ë¦¬í•˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.\n", ability_List[s]);
         }
     }
 
-    //»õ·Î »ı¼ºÇÑ ³ëµå¸¦ tail ¾Õ¿¡ ¸Å´Ş±â
+    //ìƒˆë¡œ ìƒì„±í•œ ë…¸ë“œë¥¼ tail ì•ì— ë§¤ë‹¬ê¸°
     cham->next = tail;
     cham->prev = tail->prev;
     tail->prev->next = cham;
@@ -173,22 +169,22 @@ void RemoveChampion()
     int num;
     Champion* seek;
 
-    printf("»èÁ¦ÇÒ Ã¨ÇÇ¾ğ ¹øÈ£: ");
+    printf("ì‚­ì œí•  ì±”í”¼ì–¸ ë²ˆí˜¸: ");
     scanf_s("%d", &num);
 
     for (seek = head->next; seek != tail; seek = seek->next)
     {
         if (seek->num == num)
         {
-            //¿¬°á¸®½ºÆ®¿¡¼­ ¸µÅ© Á¶Àı
+            //ì—°ê²°ë¦¬ìŠ¤íŠ¸ì—ì„œ ë§í¬ ì¡°ì ˆ
             seek->prev->next = seek->next;
             seek->next->prev = seek->prev;
-            free(seek);//¸Ş¸ğ¸® ÇØÁ¦
-            printf("»èÁ¦ÇÏ¿´½À´Ï´Ù.\n");
+            free(seek);//ë©”ëª¨ë¦¬ í•´ì œ
+            printf("ì‚­ì œí•˜ì˜€ìŠµë‹ˆë‹¤.\n");
             return;
         }
     }
-    printf("µ¥ÀÌÅÍ°¡ ¾ø½À´Ï´Ù.\n");
+    printf("ë°ì´í„°ê°€ ì—†ìŠµë‹ˆë‹¤.\n");
 
 }
 void ViewchamData(Champion* cham);
@@ -197,7 +193,7 @@ void FindChampion()
     int num = 0;
     Champion* seek = 0;
 
-    printf("°Ë»öÇÒ Ã¨ÇÇ¾ğ ¹øÈ£: ");
+    printf("ê²€ìƒ‰í•  ì±”í”¼ì–¸ ë²ˆí˜¸: ");
     scanf_s("%d", &num);
 
     for (seek = head->next; seek != tail; seek = seek->next)
@@ -208,7 +204,7 @@ void FindChampion()
             return;
         }
     }
-    printf("µ¥ÀÌÅÍ°¡ ¾ø½À´Ï´Ù.\n");
+    printf("ë°ì´í„°ê°€ ì—†ìŠµë‹ˆë‹¤.\n");
 
 }
 void ViewchamData(Champion* cham)
@@ -228,12 +224,12 @@ void ListChampion()
     int s = 0;
     Champion* seek = 0;
 
-    printf("%4s %15s ", "¹øÈ£", "ÀÌ¸§");
+    printf("%4s %15s ", "ë²ˆí˜¸", "ì´ë¦„");
     for (s = 0; s < MAX_SPEC; s++)
     {
         printf("%4s ", ability_List[s]);
     }
-    printf("´É·ÂÄ¡°¡ -1ÀÎ °÷Àº ¹ÌÀÔ·Â\n");
+    printf("ëŠ¥ë ¥ì¹˜ê°€ -1ì¸ ê³³ì€ ë¯¸ì…ë ¥\n");
 
     for (seek = head->next; seek != tail; seek = seek->next)
     {
@@ -250,7 +246,7 @@ void combination_judge()
     int con_dam = 0;
     int cc = 0;
     int carry = 0;
-    printf("Á¶ÇÕÀ» ÆÇ´ÜÇÒ ÆÀÀÇ Ä³¸¯ÅÍ ¹øÈ£¸¦ ÇÏ³ª¾¿ ÀÔ·ÂÇØÁÖ¼¼¿ä\n¹øÈ£ : ");
+    printf("ì¡°í•©ì„ íŒë‹¨í•  íŒ€ì˜ ìºë¦­í„° ë²ˆí˜¸ë¥¼ í•˜ë‚˜ì”© ì…ë ¥í•´ì£¼ì„¸ìš”\në²ˆí˜¸ : ");
     for (int i = 0; i < 5; i++) 
     {
         scanf_s("%d", &num);
@@ -259,12 +255,12 @@ void combination_judge()
             if (seek->num == num)
             {
                 ViewchamData(seek);
-                printf("%4s %15s ", "¹øÈ£", "ÀÌ¸§");
+                printf("%4s %15s ", "ë²ˆí˜¸", "ì´ë¦„");
                 for (s = 0; s < MAX_SPEC; s++)
                 {
                     printf("%4s ", ability_List[s]);
                 }
-                printf("´É·ÂÄ¡°¡ -1ÀÎ °÷Àº ¹ÌÀÔ·Â\n");
+                printf("ëŠ¥ë ¥ì¹˜ê°€ -1ì¸ ê³³ì€ ë¯¸ì…ë ¥\n");
                 for (s = 0; s < MAX_SPEC; s++)
                 {
                     tanking += seek->ability[0];
@@ -276,7 +272,7 @@ void combination_judge()
             }
         }
     }
-    printf("ÅÊÅ··Â : %d\nÀ¯Áö·Â : %d\nÁö¼Óµô : %d\ncc±â·Â : %d\nÄ³¸®·Â : %d\n", tanking/5, keeping/5, con_dam/5, cc/5, carry/5);
+    printf("íƒ±í‚¹ë ¥ : %d\nìœ ì§€ë ¥ : %d\nì§€ì†ë”œ : %d\nccê¸°ë ¥ : %d\nìºë¦¬ë ¥ : %d\n", tanking/5, keeping/5, con_dam/5, cc/5, carry/5);
     int result_ability[5] = { tanking / 5, keeping / 5, con_dam / 5, cc / 5, carry / 5 };
     int max = 1;
     for (int j = 0; j < 5; j++)
@@ -288,52 +284,52 @@ void combination_judge()
     }
     if (max == 0)
     {
-        printf("ÀÌ ÆÀÀÇ °¡Àå ¶Ù¾î³­ °ÍÀº ÅÊÅ··ÂÀÌ¸ç ");
+        printf("ì´ íŒ€ì˜ ê°€ì¥ ë›°ì–´ë‚œ ê²ƒì€ íƒ±í‚¹ë ¥ì´ë©° ");
     }
     else if (max == 1)
     {
-        printf("ÀÌ ÆÀÀÇ °¡Àå ¶Ù¾î³­ °ÍÀº À¯Áö·ÂÀÌ¸ç ");
+        printf("ì´ íŒ€ì˜ ê°€ì¥ ë›°ì–´ë‚œ ê²ƒì€ ìœ ì§€ë ¥ì´ë©° ");
     }
     else if (max == 2)
     {
-        printf("ÀÌ ÆÀÀÇ °¡Àå ¶Ù¾î³­ °ÍÀº Áö¼ÓµôÀÌ¸ç ");
+        printf("ì´ íŒ€ì˜ ê°€ì¥ ë›°ì–´ë‚œ ê²ƒì€ ì§€ì†ë”œì´ë©° ");
     }
     else if (max == 3)
     {
-        printf("ÀÌ ÆÀÀÇ °¡Àå ¶Ù¾î³­ °ÍÀº cc±â·ÂÀÌ¸ç ");
+        printf("ì´ íŒ€ì˜ ê°€ì¥ ë›°ì–´ë‚œ ê²ƒì€ ccê¸°ë ¥ì´ë©° ");
     }
     else if (max == 4)
     {
-        printf("ÀÌ ÆÀÀÇ °¡Àå ¶Ù¾î³­ °ÍÀº Ä³¸®·ÂÀÌ¸ç");
+        printf("ì´ íŒ€ì˜ ê°€ì¥ ë›°ì–´ë‚œ ê²ƒì€ ìºë¦¬ë ¥ì´ë©°");
     }
 
     if (result_ability[0] <= 200)
     {
-        printf(" ÅÊÅ··Â");
+        printf(" íƒ±í‚¹ë ¥");
     }
     else if (result_ability[1] <= 200)
     {
-        printf(" À¯Áö·Â");
+        printf(" ìœ ì§€ë ¥");
     }
     else if (result_ability[2] <= 200)
     {
-        printf(" Áö¼Óµô");
+        printf(" ì§€ì†ë”œ");
     }
     else if (result_ability[3] <= 200)
     {
-        printf(" cc±â·Â");
+        printf(" ccê¸°ë ¥");
     }
     else if (result_ability[4] <= 200)
     {
-        printf(" Ä³¸®·Â");
+        printf(" ìºë¦¬ë ¥");
     }
     if ((result_ability[0] > 200) && (result_ability[1] > 200) && (result_ability[2] > 200) && (result_ability[3] > 200) && (result_ability[4] > 200))
     {
-        printf("ºÎÁ·ÇÑ ´É·Â ¾øÀÌ ÁÁÀº Á¶ÇÕÀÔ´Ï´Ù!");
+        printf("ë¶€ì¡±í•œ ëŠ¥ë ¥ ì—†ì´ ì¢‹ì€ ì¡°í•©ì…ë‹ˆë‹¤!");
     }
     else
     {
-        printf("ÀÌ ºÎÁ·ÇÕ´Ï´Ù.\n");
+        printf("ì´ ë¶€ì¡±í•©ë‹ˆë‹¤.\n");
     }
 }
 void Exit()
